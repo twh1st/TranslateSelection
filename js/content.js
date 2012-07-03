@@ -7,14 +7,32 @@ if(!window.TranslateSelectionIsActive){
 		var pin = document.createElement('img');
 		var close = document.createElement('img');
 		close.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGVJREFUeNqckosJwDAIRI8u4ggZ+UbqKBnBWrCpHKFgHwjxEy8mARJ3tzCGTX+ZGTNUIjCkULlzo3b+Kq6bDCn5cIrPjC0f0p2pSlkvFWykWWajJg90+XOk9tC9a20/XPdrXAIMAGD+sgrlLETIAAAAAElFTkSuQmCC';
+		
+		var anki = document.createElement('img');
+		anki.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAB2UlEQVR42gAlANr/AVLhT/X+9AAAAP8A//v/+2IRZEcNRJvrnbb3tQsBCwEAAQsCDAKI5ePfjz/+fwcq+sfwj4mRUY1N6983qSrx6m/Pvm77sY2LkfPX/18AAcTEwsjMgAD/v/79Mf/ijyOP/7VINhkyGL7/+56XgRcggFiQVbAzsoszS/7593fNza+CnAKTZCZs+bbZldMNIICY4Ep+/v/BycjB/1/y6ZefQAeuv/npzgc+K4a4W29FAQIIZBLQvT8ZfigyKBYKZX/8wn7w0Ts2FgZNYdZvvz9yszH9/PsfIAAAJQDa/wT8APwXBBhCDD9jDmj5+g6X2+8QCQH//wDW7Pvi8vwtFgcnEgUCACUA2v8EPgg/chV17PIMpdL11Ovs7ff+Hg4F+/7/+f3/9/v/0+r58Pj9AohFjlmOh5nn7MffTz7/YmVmFOdh/vPv/++/DL/+/f/1B6gU5GiAAGL+k/mL8Rejm5SajSSfJC/H+59/gEHCwcrIzszEzszAwcLEzcoIEEDM8gUye3/s2fNlzzvGZ9aisuq8oo8//2ZnYeJgYWRiZAAiTlYmgABiYWZg5mDiePrn6cx3M898Oz1VYq4cH/v7n7+BbtIVZRfmZH319Q9AgAEAjVu9F60l3KkAAAAASUVORK5CYII=';
+		
+		console.log("Storage AddToAnki: "+localStorage.getItem("addtoanki"));
+		console.log("Storage Username: "+localStorage.getItem("username"));
 		span.appendChild(msg);
 		span.appendChild(pin);
 		span.appendChild(close);
+		if (localStorage.addtoanki) {
+			span.appendChild(anki);
+		}
 		msg.appendChild(loader);
-		document.body.appendChild(span);
+		
+		
 		close.addEventListener('click',function(){
 			balloon.close();
 		},false);
+		
+		anki.addEventListener('click',function(){
+			console.log("Send to Anki");
+			
+		},false);
+		
+		document.body.appendChild(span);
+		
 		/* CSS for span */
 		span.style.backgroundAttachment = 'scroll';
 		span.style.backgroundClip = 'border-box';
@@ -108,6 +126,7 @@ if(!window.TranslateSelectionIsActive){
 		pin.style.verticalAlign = 'baseline';
 		pin.style.width = '15px';
 		pin.style.zIndex = 'auto';
+		
 		/* CSS for close */
 		close.style.backgroundAttachment = 'scroll';
 		close.style.backgroundClip = 'border-box';
@@ -134,6 +153,35 @@ if(!window.TranslateSelectionIsActive){
 		close.style.top = '3px';
 		close.style.width = '12px';
 		close.style.zIndex = 'auto';
+		
+		/* CSS for Anki Button */
+		anki.style.backgroundAttachment = 'scroll';
+		anki.style.backgroundClip = 'border-box';
+		anki.style.backgroundColor = 'transparent';
+		anki.style.backgroundImage = 'none';
+		anki.style.backgroundOrigin = 'padding-box';
+		anki.style.border = 'none';
+		anki.style.color = 'white';
+		anki.style.cursor = 'pointer';
+		anki.style.display = 'block';
+		anki.style.fontFamily = 'sans-serif';
+		anki.style.fontSize = '12px';
+		anki.style.fontStyle = 'normal';
+		anki.style.fontVariant = 'normal';
+		anki.style.fontWeight = 'normal';
+		anki.style.height = '12px';
+		anki.style.left = 'auto';
+		anki.style.lineHeight = 'normal';
+		anki.style.margin = '0px';
+		anki.style.padding = '0px';
+		anki.style.position = 'absolute';
+		anki.style.right = '3px';
+		anki.style.textAlign = 'left';
+		anki.style.top = '20px';
+		anki.style.width = '12px';
+		anki.style.zIndex = 'auto';
+		
+		
 		/*
 		* public object
 		*/
@@ -163,7 +211,9 @@ if(!window.TranslateSelectionIsActive){
 			}
 		};
 		return balloon;
-	}
+	};
+	
+	
 	chrome.extension.onRequest.addListener(
 		function (req, sender,sendResponse) {
 			if(req.method == 'get') {
