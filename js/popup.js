@@ -121,6 +121,7 @@ var doTranslation = function doTranslation() {
 	if(F.replace(/^\s+|\s+$/)!=='') $('#to').html('').addClass('loading');
 	$.ajax({
 		url : 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate',
+		dataType: 'json',
 		data : {
 			'appId'       : '76518BFCEBBF18E107C7073FBD4A735001B56BB1',
 			'text'        : F,

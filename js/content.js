@@ -1,5 +1,13 @@
+/*
+ * http://code.google.com/chrome/extensions/content_scripts.html#pi
+ * Inserting code into a page programmatically is useful when your JavaScript
+ * or CSS code shouldn't be injected into every single page that matches the
+ * pattern - for example, if you want a script to run only when the user clicks a browser action's icon.
+ */
+
 if(!window.TranslateSelectionIsActive){
 	var createBalloon = function createBalloon(message){
+		
 		var rect = window.getSelection().getRangeAt(0).getBoundingClientRect();
 		var span = document.createElement('span');
 		var msg = document.createElement('span');
@@ -16,7 +24,8 @@ if(!window.TranslateSelectionIsActive){
 		span.appendChild(msg);
 		span.appendChild(pin);
 		span.appendChild(close);
-		if (localStorage.addtoanki) {
+		
+		if (localStorage.addtoanki == "checked") {
 			span.appendChild(anki);
 		}
 		msg.appendChild(loader);
@@ -230,7 +239,7 @@ if(!window.TranslateSelectionIsActive){
 			if(req.method == 'getContextMenus') {
 				balloon.setText(req.string);
 				balloon.placeTop();
-				sendResponse({});
+				sendResponse({});   // callback function
 			}
 		}
 	);

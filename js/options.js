@@ -86,7 +86,7 @@ function createAnkiOptions() {
 	
 	addtoankitextbox = $("#addtoanki");	
 	
-	if (localStorage.addtoanki == "true") {
+	if (localStorage.addtoanki == "checked") {
 	   addtoankitextbox.attr("checked",true);
     }
 	

@@ -1,6 +1,8 @@
+
+
 function contextMenusOnClick(info,tab,opt) {
-	var balloon;
 	chrome.tabs.getSelected(null, function(tab) { // get selected string in current tab
+		console.log("contextMenusOnClick");
 		chrome.tabs.executeScript(tab.id,{file:'js/content.js',allFrames:true},function() {
 			chrome.tabs.getSelected(null, function(tab) { // get selected string in current tab
 				chrome.tabs.sendRequest(tab.id,{'method':'prepareBalloon'},function(){
@@ -14,6 +16,7 @@ function contextMenusOnClick(info,tab,opt) {
 							'to'          : opt.split("|")[1],
 							'contentType' : 'text/plain'
 						},
+						dataType: 'json',
 						'success' : function(T)  {
 							T = T.replace(/^"|"$/gi,'');
 							chrome.tabs.getSelected(null, function(tab) { // get selected string in current tab
@@ -21,7 +24,7 @@ function contextMenusOnClick(info,tab,opt) {
 							});
 						},
 						'error' : function(jqXHR, textStatus, errorThrown) {
-							var T = 'ERROR! ' + textStatus;
+							var T = 'ERROR! ' + textStatus + " " + errorThrown;
 							chrome.tabs.getSelected(null, function(tab) { // get selected string in current tab
 								chrome.tabs.executeScript(tab.id,{file:'js/content.js',allFrames:true},function() {injCallBack(T)});
 							});
